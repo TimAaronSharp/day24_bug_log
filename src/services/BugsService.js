@@ -18,8 +18,12 @@ class BugsService {
     await bug.populate('creator')
     return bug
   }
-  async updateBug(bugId, bugData, userInfo) {
+  async updateBug(bugId, bugData) {
     const bugToUpdate = await this.getBugById(bugId)
+
+    // if (bugToUpdate.closed) {
+    //   return `${bugToUpdate.id} ${bugToUpdate.title} has been close and can no longer be updated.`
+    // }
 
     bugToUpdate.title = bugData.title ?? bugToUpdate.title
     bugToUpdate.description = bugData.description ?? bugToUpdate.description
@@ -35,7 +39,13 @@ class BugsService {
     //   throw new Forbidden(`YOU CAME TO THE WRONG NEIGHBORHOOD, SUHN!!!! This isn't your bug to ${userInfo.nickname.toUpperCase()}`)
     // }
   }
-
+  async deleteBug(bugId) {
+    const bugToDelete = await this.getBugById(bugId)
+    const bugToDeleteId = bugToDelete.id
+    const bugTitle = bugToDelete.title
+    await bugToDelete.deleteOne()
+    return `${bugToDeleteId} ${bugTitle} has been deleted!`
+  }
 }
 
 
