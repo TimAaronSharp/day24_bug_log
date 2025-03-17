@@ -7,41 +7,37 @@ export class BugsController extends BaseController {
   constructor() {
     super('api/bugs')
     this.router
+      .get('', this.getAllBugs)
       .use(Auth0Provider.getAuthorizedUserInfo)
       .post('', this.createBug)
   }
-
   /**
-     * @param {import("express").Request} request
-     * @param {import("express").Response} response
-     * @param {import("express").NextFunction} next
-     */
-
-  async createBug(request, response, next) {
+  * @param {import("express").Request} req
+  * @param {import("express").Response} res
+  * @param {import("express").NextFunction} next
+  */
+  async getAllBugs(req, res, next) {
     try {
-      const bugData = request.body
-      const userInfo = request.userInfo
-      bugData.creatorId = userInfo.id
-      const bug = await bugsService.createBug(bugData)
-      response.send(bug)
+      const bugs = await bugsService.getAllBugs()
+      res.send(bugs)
     } catch (error) {
       next(error)
     }
   }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  /**
+  * @param {import("express").Request} req
+  * @param {import("express").Response} res
+  * @param {import("express").NextFunction} next
+  */
+  async createBug(req, res, next) {
+    try {
+      const bugData = req.body
+      const userInfo = req.userInfo
+      bugData.creatorId = userInfo.id
+      const bug = await bugsService.createBug(bugData)
+      res.send(bug)
+    } catch (error) {
+      next(error)
+    }
+  }
 }

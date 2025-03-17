@@ -12,16 +12,12 @@ export const BugSchema = new Schema({
   {
     timestamps: true,
     toJSON: { virtuals: true }
-  }
-
-
-
-)
+  })
 
 BugSchema.virtual('creator', {
   ref: 'Account',
   localField: 'creatorId',
-  foreignField: '_Id',
+  foreignField: '_id',
   justOne: true
 })
 

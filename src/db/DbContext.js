@@ -6,9 +6,9 @@ import { NoteSchema } from '../models/Note.js';
 
 class DbContext {
   Account = mongoose.model('Account', AccountSchema);
-  Bug = mongoose.model('Bug', BugSchema)
-  TrackedBug = mongoose.model('TrackedBug', TrackedBugSchema)
-  Note = mongoose.model('Note', NoteSchema)
+  Bugs = mongoose.model('Bug', BugSchema)
+  TrackedBugs = mongoose.model('TrackedBug', TrackedBugSchema)
+  Notes = mongoose.model('Note', NoteSchema)
 }
 
 export const dbContext = new DbContext()
